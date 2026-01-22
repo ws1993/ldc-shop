@@ -349,7 +349,7 @@ async function isProductAggregatesBackfilled(): Promise<boolean> {
     try {
         const result = await db.select({ value: settings.value })
             .from(settings)
-            .where(eq(settings.key, 'product_aggregates_backfilled'));
+            .where(eq(settings.key, 'product_aggregates_backfilled_v2'));
         return result[0]?.value === '1';
     } catch (error: any) {
         if (isMissingTable(error)) {
@@ -362,7 +362,7 @@ async function isProductAggregatesBackfilled(): Promise<boolean> {
 
 async function markProductAggregatesBackfilled() {
     await db.insert(settings).values({
-        key: 'product_aggregates_backfilled',
+        key: 'product_aggregates_backfilled_v2',
         value: '1',
         updatedAt: new Date()
     }).onConflictDoUpdate({
