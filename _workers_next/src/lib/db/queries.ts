@@ -777,6 +777,7 @@ async function withProductColumnFallback<T>(fn: () => Promise<T>): Promise<T> {
 }
 
 export async function withOrderColumnFallback<T>(fn: () => Promise<T>): Promise<T> {
+    await ensureDatabaseInitialized()
     try {
         return await fn()
     } catch (error: any) {
@@ -1799,6 +1800,37 @@ async function migrateGitHubUsersDedupAndCanonicalize() {
                 lastLoginAt: mergedLastLoginAt,
             })
             .where(eq(loginUsers.userId, canonical.userId))
+
+        await runMigrationQuery(sql`
+            UPDATE orders
+            SET username = ${normalizedUsername}
+            WHERE user_id = ${canonical.userId}
+              AND (username IS NULL OR LOWER(username) NOT LIKE 'gh_%')
+        `)
+        await runMigrationQuery(sql`
+            UPDATE reviews
+            SET username = ${normalizedUsername}
+            WHERE user_id = ${canonical.userId}
+              AND (username IS NULL OR LOWER(username) NOT LIKE 'gh_%')
+        `)
+        await runMigrationQuery(sql`
+            UPDATE refund_requests
+            SET username = ${normalizedUsername}
+            WHERE user_id = ${canonical.userId}
+              AND (username IS NULL OR LOWER(username) NOT LIKE 'gh_%')
+        `)
+        await runMigrationQuery(sql`
+            UPDATE user_messages
+            SET username = ${normalizedUsername}
+            WHERE user_id = ${canonical.userId}
+              AND (username IS NULL OR LOWER(username) NOT LIKE 'gh_%')
+        `)
+        await runMigrationQuery(sql`
+            UPDATE wishlist_items
+            SET username = ${normalizedUsername}
+            WHERE user_id = ${canonical.userId}
+              AND (username IS NULL OR LOWER(username) NOT LIKE 'gh_%')
+        `)
 
         for (const row of rows) {
             if (row.userId === canonical.userId) continue

@@ -140,11 +140,11 @@
 | `MERCHANT_ID` | Secret | EPay 商户 ID |
 | `MERCHANT_KEY` | Secret | EPay 商户 Key |
 | `AUTH_SECRET` | Secret | 随机字符串 (可用 `openssl rand -base64 32` 生成) |
-| `ADMIN_USERS` | Secret | 管理员用户名列表（支持 Linux DO 用户名和 GitHub 用户名 `gh_<login>`），逗号分隔。例如: `zhangsan,gh_octocat` |
+| `ADMIN_USERS` | Secret | 管理员用户名列表（支持 Linux DO 用户名和 GitHub 用户名 `gh_GitHub用户名`），逗号分隔。例如: `zhangsan,gh_octocat` |
 | `NEXT_PUBLIC_APP_URL` | **Text** | 你的 Workers 域名 (如 `https://ldc-shop.xxx.workers.dev`) |
 
 > ⚠️ **重要**: `NEXT_PUBLIC_APP_URL` **必须**设置为 Text 类型，不能用 Secret，否则支付签名会失败！
-> ⚠️ **重要**: 若 GitHub 用户需要管理员权限，`ADMIN_USERS` 中**必须**填写 `gh_<github_login>`（例如 `gh_octocat`），不能只写原始 GitHub 用户名。
+> ⚠️ **重要**: 若 GitHub 用户需要管理员权限，`ADMIN_USERS` 中**必须**填写 `gh_GitHub用户名`（例如 `gh_octocat`），不能只写原始 GitHub 用户名。
 
 **回调地址配置：**
 
@@ -169,7 +169,7 @@
 
 #### 6. 进入管理后台
 
-1. **设置管理员**: 在环境变量 `ADMIN_USERS` 中配置管理员用户名（不区分大小写，多个用户用逗号分隔）。支持 Linux DO 用户名，以及 GitHub 登录用户名 `gh_<github_login>`。
+1. **设置管理员**: 在环境变量 `ADMIN_USERS` 中配置管理员用户名（不区分大小写，多个用户用逗号分隔）。支持 Linux DO 用户名，以及 GitHub 登录用户名 `gh_GitHub用户名`。
 2. **登录商城**: 使用该管理账号登录商城。
 3. **访问入口**:
     - **顶部导航**: 登录后，顶部导航栏会出现 "管理后台" 链接（桌面端）。
@@ -211,7 +211,7 @@
 | `MERCHANT_ID` | EPay 商户 ID（建议 Secret） |
 | `MERCHANT_KEY` | EPay 商户 Key（Secret） |
 | `AUTH_SECRET` | NextAuth 加密密钥（Secret） |
-| `ADMIN_USERS` | 管理员用户名列表，支持 Linux DO 用户名和 GitHub `gh_<login>` 用户名，逗号分隔。例如: `zhangsan,gh_octocat` |
+| `ADMIN_USERS` | 管理员用户名列表，支持 Linux DO 用户名和 GitHub `gh_GitHub用户名` 用户名，逗号分隔。例如: `zhangsan,gh_octocat` |
 | `NEXT_PUBLIC_APP_URL` | 部署后的完整 URL (用于回调，必须 Text) |
 
 > ⚠️ 使用 GitHub 登录时，系统用户名会自动加前缀 `gh_`；如需管理员权限，`ADMIN_USERS` 中**必须**填写这个带前缀的用户名（例如 `gh_octocat`），不能只写 `octocat`。

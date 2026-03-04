@@ -1,6 +1,6 @@
 import { db } from "@/lib/db"
-import { orders } from "@/lib/db/schema"
-import { and, desc, eq, or, sql } from "drizzle-orm"
+import { loginUsers, orders } from "@/lib/db/schema"
+import { and, desc, eq, inArray, or, sql } from "drizzle-orm"
 import { AdminOrdersContent } from "@/components/admin/orders-content"
 import { normalizeTimestampMs, withOrderColumnFallback } from "@/lib/db/queries"
 import { PAYMENT_PRODUCT_ID } from "@/lib/payment"
@@ -60,6 +60,28 @@ export default async function AdminOrdersPage(props: {
         ])
     })
 
+    const orderUserIds = Array.from(new Set(
+        rows
+            .map((o: any) => (typeof o.userId === "string" ? o.userId.trim() : ""))
+            .filter((id: string) => id.length > 0)
+    ))
+
+    const loginUserRows = orderUserIds.length > 0
+        ? await db
+            .select({
+                userId: loginUsers.userId,
+                username: loginUsers.username,
+            })
+            .from(loginUsers)
+            .where(inArray(loginUsers.userId, orderUserIds))
+        : []
+
+    const usernameByUserId = new Map<string, string>()
+    for (const row of loginUserRows) {
+        if (!row.userId || !row.username) continue
+        usernameByUserId.set(row.userId, row.username)
+    }
+
     const total = countRes[0]?.count || 0
 
     return (
@@ -67,7 +89,7 @@ export default async function AdminOrdersPage(props: {
             orders={rows.map((o: any) => ({
                 orderId: o.orderId,
                 userId: o.userId,
-                username: o.username,
+                username: (o.userId && usernameByUserId.get(o.userId)) || o.username,
                 email: o.email,
                 productName: o.productName,
                 amount: o.amount,

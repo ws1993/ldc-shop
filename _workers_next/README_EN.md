@@ -167,10 +167,10 @@ Example:
 It must exactly match the protocol and domain of `NEXT_PUBLIC_APP_URL` (no extra trailing slash).
 
 ### 3. Other Variables
-*   **ADMIN_USERS**: Admin usernames, comma separated (supports Linux DO usernames and GitHub usernames in `gh_<login>` format, e.g., `chatgpt,gh_octocat`) (**Secret recommended**).
+*   **ADMIN_USERS**: Admin usernames, comma separated (supports Linux DO usernames and GitHub usernames in `gh_GitHub用户名` format, e.g., `chatgpt,gh_octocat`) (**Secret recommended**).
 *   **NEXT_PUBLIC_APP_URL**: Your full app URL (e.g., `https://store.chatgpt.org.uk`). **Must be Text, not Secret**.
 
-> Important: For a GitHub account to be recognized as admin, `ADMIN_USERS` must contain `gh_<github_login>` (for example `gh_octocat`). Using just `octocat` will not work.
+> Important: For a GitHub account to be recognized as admin, `ADMIN_USERS` must contain `gh_GitHub用户名` (for example `gh_octocat`). Using just `octocat` will not work.
 
 ## 🔌 Card Auto-Replenish API Integration
 
