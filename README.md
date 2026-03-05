@@ -99,6 +99,12 @@
 
 👉 **[查看完整部署指南 → `_workers_next/README.md`](./_workers_next/README.md)**
 
+### 备选：Docker 自托管部署
+
+适用于 VPS / 自有服务器，数据库使用本地 SQLite，无需依赖第三方云服务。
+
+👉 **[查看 Docker 部署指南 → `_docker/README.md`](./_docker/README.md)**
+
 ### 备选：Vercel 部署
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchatgptuk%2Fldc-shop&env=OAUTH_CLIENT_ID,OAUTH_CLIENT_SECRET,MERCHANT_ID,MERCHANT_KEY,ADMIN_USERS,NEXT_PUBLIC_APP_URL&envDescription=Required%20Environment%20Variables&project-name=ldc-shop&repository-name=ldc-shop&stores=%5B%7B%22type%22%3A%22postgres%22%7D%5D)
