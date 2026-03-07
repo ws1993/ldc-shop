@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -10,9 +9,7 @@ import { getSetting } from "@/lib/db/queries";
 import { Suspense } from "react";
 import { detectServerLocale } from "@/lib/i18n/server";
 import type { Locale } from "@/lib/i18n/shared";
-import { DEFAULT_MONO_FONT_STACK, getThemeFontStack } from "@/lib/theme-fonts";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+import { DEFAULT_MONO_FONT_STACK, getThemeFontStack, getThemeFontStylesheetHref } from "@/lib/theme-fonts";
 
 const DEFAULT_TITLE = "LDC Virtual Goods Shop";
 const DEFAULT_DESCRIPTION = "High-quality virtual goods, instant delivery";
@@ -115,6 +112,7 @@ async function RootLayoutContent({
   const themePrimaryL = THEME_PRIMARY_L[themeColor || "purple"] ?? 0.45;
   const themePrimaryDarkL = THEME_PRIMARY_DARK_L[themeColor || "purple"] ?? 0.7;
   const themeFontStack = getThemeFontStack(themeFont);
+  const themeFontStylesheetHref = getThemeFontStylesheetHref(themeFont);
 
   return (
     <html
@@ -130,6 +128,13 @@ async function RootLayoutContent({
       }}
     >
       <head>
+        {themeFontStylesheetHref && (
+          <>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+            <link rel="stylesheet" href={themeFontStylesheetHref} />
+          </>
+        )}
         {/* Polyfill for esbuild's __name helper - fixes "__name is not defined" error on Cloudflare Workers */}
         <script
           dangerouslySetInnerHTML={{
@@ -137,7 +142,7 @@ async function RootLayoutContent({
           }}
         />
       </head>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <Providers themeColor={themeColor} initialLocale={initialLocale}>
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
@@ -154,7 +159,7 @@ async function RootLayoutContent({
 function RootLayoutFallback() {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", inter.variable)}>
+      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         <div className="relative flex min-h-screen flex-col">
           <div className="h-16 border-b border-border/40 bg-background/70" />
           <div className="flex-1" />

@@ -323,7 +323,9 @@
                 "inter": "现代无衬线",
                 "system": "系统默认",
                 "rounded": "圆润无衬线",
-                "serif": "衬线阅读"
+                "serif": "衬线阅读",
+                "notoSansSc": "Noto Sans SC",
+                "notoSerifSc": "Noto Serif SC"
             },
             "notifications": {
                 "title": "通知设置",

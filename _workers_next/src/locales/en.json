@@ -323,7 +323,9 @@
                 "inter": "Modern Sans",
                 "system": "System Default",
                 "rounded": "Rounded Sans",
-                "serif": "Reading Serif"
+                "serif": "Reading Serif",
+                "notoSansSc": "Noto Sans SC",
+                "notoSerifSc": "Noto Serif SC"
             },
             "notifications": {
                 "title": "Notification Settings",
