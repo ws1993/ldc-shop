@@ -3,7 +3,7 @@
 import { useDeferredValue, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Boxes, Heart, Layers3, Search, SlidersHorizontal, Sparkles, Users } from "lucide-react"
+import { ArrowRight, Heart, Search, Sparkles } from "lucide-react"
 import { AnnouncementPopup } from "@/components/announcement-popup"
 import { CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -105,27 +105,6 @@ export function HomeContent({ products, announcement, visitorCount, categories =
         { key: "priceAsc", label: t("home.sort.priceAsc") },
         { key: "priceDesc", label: t("home.sort.priceDesc") },
     ] as const
-    const heroMetrics = [
-        {
-            key: "products",
-            label: t("home.metrics.products"),
-            value: products.length,
-            icon: Boxes,
-        },
-        {
-            key: "categories",
-            label: t("home.metrics.categories"),
-            value: categories.length,
-            icon: Layers3,
-        },
-        {
-            key: "visitors",
-            label: t("home.metrics.visitors"),
-            value: typeof visitorCount === "number" ? visitorCount : null,
-            icon: Users,
-        },
-    ]
-
     return (
         <main className="container relative overflow-hidden py-8 md:py-14">
             <AnnouncementPopup popup={announcement?.popup ?? null} />
@@ -193,72 +172,30 @@ export function HomeContent({ products, announcement, visitorCount, categories =
             <section className="relative mb-8 overflow-hidden rounded-[2rem] border border-border/40 bg-gradient-to-br from-card via-card/95 to-primary/5 shadow-[0_25px_80px_-40px_rgba(15,23,42,0.25)]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.75),_transparent_36%)] dark:bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.08),_transparent_36%)]" />
                 <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-                <div className="relative px-6 py-7 md:px-8 md:py-8">
-                    <div className="flex flex-col justify-between gap-6">
-                        <div className="space-y-5">
-                            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
-                                <Sparkles className="h-3.5 w-3.5" />
-                                <span>{t("home.heroBadge")}</span>
-                            </div>
-                            <div className="max-w-3xl space-y-3">
-                                <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl xl:text-6xl">
-                                    {t("home.title")}
-                                </h1>
-                                <p className="max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
-                                    {t("home.subtitle")}
-                                </p>
-                            </div>
+                <div className="relative px-6 py-5 md:px-8 md:py-6">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div className="min-w-0 space-y-2">
+                            <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl xl:text-4xl">
+                                {t("home.title")}
+                            </h1>
+                            <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
+                                {t("home.subtitle")}
+                            </p>
                         </div>
-
-                        <div className="grid gap-3 sm:grid-cols-3">
-                            {heroMetrics.map((metric) => {
-                                const Icon = metric.icon
-                                return (
-                                    <div
-                                        key={metric.key}
-                                        className="rounded-[1.4rem] border border-border/45 bg-background/72 px-4 py-4 shadow-sm backdrop-blur-md"
-                                    >
-                                        <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                                            <Icon className="h-4.5 w-4.5" />
-                                        </div>
-                                        <div className="text-2xl font-semibold tracking-tight text-foreground">
-                                            {metric.value === null ? "--" : metric.value}
-                                        </div>
-                                        <div className="mt-1 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
-                                            {metric.label}
-                                        </div>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <div className="flex flex-wrap items-center gap-2">
-                            {wishlistEnabled && (
-                                <Link href="/wishlist" className="inline-flex">
-                                    <Button variant="outline" className="h-11 rounded-2xl border-border/50 bg-background/70 px-4 shadow-none">
-                                        <Heart className="mr-2 h-4 w-4" />
-                                        {t("wishlist.title")}
-                                    </Button>
-                                </Link>
-                            )}
-                        </div>
+                        {wishlistEnabled && (
+                            <Link href="/wishlist" className="inline-flex shrink-0">
+                                <Button variant="outline" className="h-10 rounded-2xl border-border/50 bg-background/70 px-4 shadow-none">
+                                    <Heart className="mr-2 h-4 w-4" />
+                                    {t("wishlist.title")}
+                                </Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </section>
 
             <section className="mb-10 space-y-4">
                 <div className="flex flex-col gap-4 rounded-[1.8rem] border border-border/40 bg-card/70 p-4 shadow-[0_20px_50px_-36px_rgba(15,23,42,0.3)] backdrop-blur-md">
-                    <div className="flex flex-wrap items-center justify-between gap-3 px-1">
-                        <div className="space-y-1">
-                            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                                <SlidersHorizontal className="h-4 w-4" />
-                                <span>{t("home.catalogEyebrow")}</span>
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                                {t("home.catalogSubtitle")}
-                            </div>
-                        </div>
-                    </div>
-
                     <div className="grid gap-4 xl:grid-cols-[minmax(0,17rem)_minmax(0,1fr)_auto] xl:items-center">
                         <div className="relative w-full">
                             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -312,13 +249,10 @@ export function HomeContent({ products, announcement, visitorCount, categories =
 
             <section>
                 <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-                    <div className="space-y-2">
+                    <div>
                         <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
                             {t("home.catalogTitle")}
                         </h2>
-                        <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
-                            {t("home.catalogSubtitle")}
-                        </p>
                     </div>
                     <Badge variant="secondary" className="w-fit rounded-full border border-border/50 bg-background/80 px-4 py-2">
                         {t("home.resultsCount", { count: sortedProducts.length })}
@@ -421,22 +355,27 @@ export function HomeContent({ products, announcement, visitorCount, categories =
                                     <div className="mt-auto rounded-[1.3rem] border border-border/35 bg-background/70 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]">
                                         <div className="flex items-end justify-between gap-4">
                                             <div className="min-w-0">
-                                                <div className="flex items-baseline gap-2">
-                                                    <span className="whitespace-nowrap text-2xl font-semibold tracking-tight text-foreground tabular-nums">
+                                                <div className="flex flex-wrap items-baseline gap-2">
+                                                    <span className="whitespace-nowrap text-2xl font-semibold tracking-tight text-primary tabular-nums">
                                                         {Number(product.price)}
                                                     </span>
                                                     <span className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
                                                         {t("common.credits")}
                                                     </span>
+                                                    {product.compareAtPrice && Number(product.compareAtPrice) > Number(product.price) && (
+                                                        <>
+                                                            <span className="text-sm tabular-nums text-muted-foreground/50 line-through">
+                                                                {Number(product.compareAtPrice)}
+                                                            </span>
+                                                            <span className="rounded-full bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-600 dark:bg-red-500/15 dark:text-red-400">
+                                                                -{Math.round((1 - Number(product.price) / Number(product.compareAtPrice)) * 100)}%
+                                                            </span>
+                                                        </>
+                                                    )}
                                                 </div>
                                                 <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
                                                     <span>{t("common.stock")}: {product.stockCount >= INFINITE_STOCK ? "∞" : product.stockCount}</span>
                                                     <span>{t("common.sold")}: {product.soldCount}</span>
-                                                    {product.compareAtPrice && Number(product.compareAtPrice) > Number(product.price) && (
-                                                        <span className="line-through opacity-70">
-                                                            {Number(product.compareAtPrice)}
-                                                        </span>
-                                                    )}
                                                 </div>
                                             </div>
 
