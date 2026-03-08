@@ -71,7 +71,7 @@
         "announcementLabel": "站点公告",
         "pendingOrderLabel": "待处理订单",
         "catalogEyebrow": "目录与筛选",
-        "catalogTitle": "探索商品目录",
+        "catalogTitle": "探索商品",
         "catalogSubtitle": "按分类、库存、销量和价格快速找到最适合的商品。",
         "resultsCount": "当前结果 {{count}}",
         "metrics": {

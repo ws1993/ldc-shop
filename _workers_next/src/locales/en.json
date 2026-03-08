@@ -71,7 +71,7 @@
         "announcementLabel": "Store update",
         "pendingOrderLabel": "Pending orders",
         "catalogEyebrow": "Catalog & filters",
-        "catalogTitle": "Explore the catalog",
+        "catalogTitle": "Explore products",
         "catalogSubtitle": "Find the right product faster with category, stock, sales and price filters.",
         "resultsCount": "{{count}} results",
         "metrics": {

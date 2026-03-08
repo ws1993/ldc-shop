@@ -256,7 +256,7 @@ export function HomeContent({ products, announcement, visitorCount, categories =
             <section>
                 <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
+                        <h2 className="text-lg font-medium tracking-tight text-foreground/90 md:text-xl">
                             {t("home.catalogTitle")}
                         </h2>
                     </div>
